@@ -1,7 +1,7 @@
 full_name:Gilded Rose Refactoring Kata
 
 # set your preferred editor and diff tool.
-view_program:subl
+view_program:Notepad
 diff_program:meld
 
 # Settings for the Python version
@@ -21,7 +21,7 @@ diff_program:meld
 #interpreter:ruby
 
 # Settings for the C# version
-#executable:${TEXTTEST_HOME}/GildedRose.exe
+executable:${TEXTTEST_HOME}/csharp/bin/Release/csharp.exe
 
 # Settings for the Perl version
 #executable:${TEXTTEST_HOME}/perl/texttest_fixture.pl
