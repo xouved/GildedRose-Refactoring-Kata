@@ -2,90 +2,76 @@
 
 namespace csharp
 {
-    public class GildedRose
+    public static class GildedRose
     {
-        IList<Item> Items;
-        public GildedRose(IList<Item> Items)
+        public static void UpdateQuality(IList<Item> items)
         {
-            this.Items = Items;
-        }
-
-        public void UpdateQuality()
-        {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (Item i in items)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                //"Sulfuras", being a legendary item, never has to be sold or decreases in Quality
+                if (i.Name != "Sulfuras, Hand of Ragnaros")
                 {
-                    if (Items[i].Quality > 0)
+                    int denote = 0;
+                    if (i.Name == "Aged Brie")
                     {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros" )
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-
-                        if (Items[i].Name.Contains("Conjured"))
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
+                        //increases by 1 as usual
+                        denote++;
                     }
-                }
-                else
-                {
-                    if (Items[i].Quality < 50)
+                    else if (i.Name == "Backstage passes to a TAFKAL80ETC concert")
                     {
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                        //increases by 1 as usual
+                        denote++;
+                        //increases by 2 when there are 10 days or less
+                        if (i.SellIn < 11)
                         {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
+                            denote++;
                         }
-                    }
-                }
-
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
-                if (Items[i].SellIn < 0)
-                {
-                    if (Items[i].Name != "Aged Brie")
-                    {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                        //increases by 3 when there are 5 days or less
+                        if (i.SellIn < 6)
                         {
-                            if (Items[i].Quality > 0)
-                            {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                                {
-                                    Items[i].Quality = Items[i].Quality - 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
+                            denote++;
                         }
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
+                        //All items have a Quality value which denotes how valuable the item is
+                        denote--;
+                        if (i.Name.Contains("Conjured"))
                         {
-                            Items[i].Quality = Items[i].Quality + 1;
+                            //"Conjured" items degrade in Quality twice as fast as normal items
+                            denote = denote * 2;
                         }
+                    }
+                    
+                    //All items have a SellIn value which denotes the number of days we have to sell the item
+                    i.SellIn--;
+
+                    if (i.SellIn < 0)
+                    {
+                        //Once the sell by date has passed, Quality degrades twice as fast
+                        //Quality drops to 0 after the concert
+                        if (i.Name == "Backstage passes to a TAFKAL80ETC concert")
+                        {
+                            i.Quality -= i.Quality;
+                            denote = 0;
+                        }
+                        else
+                        {
+                            denote = denote * 2;
+                        }
+                    }
+                    //We add the coeficient "denote" to the quality witch he increase or not the value
+                    i.Quality += denote;
+
+                    // The Quality of an item is never more than 50
+                    if (i.Quality > 50)
+                    {
+                        i.Quality = 50;
+                    }
+                    //The Quality of an item is never negative
+                    else if (i.Quality < 0)
+                    {
+                        i.Quality = 0;
                     }
                 }
             }
