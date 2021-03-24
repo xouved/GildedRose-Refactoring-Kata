@@ -8,25 +8,20 @@ namespace csharp
         {
             foreach (Item i in items)
             {
-                //"Sulfuras", being a legendary item, never has to be sold or decreases in Quality
                 if (i.Name != "Sulfuras, Hand of Ragnaros")
                 {
                     int denote = 0;
                     if (i.Name == "Aged Brie")
                     {
-                        //increases by 1 as usual
                         denote++;
                     }
                     else if (i.Name == "Backstage passes to a TAFKAL80ETC concert")
                     {
-                        //increases by 1 as usual
                         denote++;
-                        //increases by 2 when there are 10 days or less
                         if (i.SellIn < 11)
                         {
                             denote++;
                         }
-                        //increases by 3 when there are 5 days or less
                         if (i.SellIn < 6)
                         {
                             denote++;
@@ -34,7 +29,6 @@ namespace csharp
                     }
                     else
                     {
-                        //All items have a Quality value which denotes how valuable the item is
                         denote--;
                         if (i.Name.Contains("Conjured"))
                         {
@@ -43,7 +37,6 @@ namespace csharp
                         }
                     }
                     
-                    //All items have a SellIn value which denotes the number of days we have to sell the item
                     i.SellIn--;
 
                     if (i.SellIn < 0)
@@ -63,12 +56,10 @@ namespace csharp
                     //We add the coeficient "denote" to the quality witch he increase or not the value
                     i.Quality += denote;
 
-                    // The Quality of an item is never more than 50
                     if (i.Quality > 50)
                     {
                         i.Quality = 50;
                     }
-                    //The Quality of an item is never negative
                     else if (i.Quality < 0)
                     {
                         i.Quality = 0;
