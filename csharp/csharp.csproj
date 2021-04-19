@@ -64,7 +64,11 @@
     <Compile Include="ApprovalTest.cs" />
     <Compile Include="GildedRose.cs" />
     <Compile Include="GildedRoseTest.cs" />
-    <Compile Include="Item.cs" />
+    <Compile Include="Items\IFactoryItem.cs" />
+    <Compile Include="Items\Item.AgedBrie.cs" />
+    <Compile Include="Items\Item.BackstagePasses.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\Item.Sufuras.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

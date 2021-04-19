@@ -51,7 +51,7 @@ namespace csharp
         [Test]
         public void DenoteSulfuras()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 } };
+            IList<Item> Items = new List<Item> { new Sufuras(0) };
             for (int i = 0; i < 2; i++)
             {
                 GildedRose.UpdateQuality(Items);
@@ -63,11 +63,11 @@ namespace csharp
         public void BackstagePassesRules()
         {
             IList<Item> Items = new List<Item> { 
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 20, Quality = 10 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 10 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 10 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 50 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 1, Quality = 49 }
+                new BackstagePasses(20, 10),
+                new BackstagePasses(10, 10),
+                new BackstagePasses(5, 10),
+                new BackstagePasses(0, 50),
+                new BackstagePasses(1, 49)
             };
 
             GildedRose.UpdateQuality(Items);
@@ -88,9 +88,9 @@ namespace csharp
         public void AgedBrieRules()
         {
             IList<Item> Items = new List<Item> {
-                new Item { Name = "Aged Brie", SellIn = 1, Quality = 0 },
-                new Item { Name = "Aged Brie", SellIn = 0, Quality = 2 },
-                new Item { Name = "Aged Brie", SellIn = -4, Quality = 24 }
+                new AgedBrie (1, 0 ),
+                new AgedBrie (0, 2 ),
+                new AgedBrie (-4, 24)
             };
 
             GildedRose.UpdateQuality(Items);
